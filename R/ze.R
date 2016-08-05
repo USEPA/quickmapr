@@ -34,7 +34,7 @@ ze <- function(qmap_obj = NULL, extent = NULL) {
         } else {
             qmap_obj$map_extent <- bbox(extent)
         }
-        plot.qmap(qmap_obj,qmap_obj$resolution)
+        plot.qmap(qmap_obj)#,qmap_obj$resolution)
         assign(obj, qmap_obj, envir = parent.frame())
         
     }

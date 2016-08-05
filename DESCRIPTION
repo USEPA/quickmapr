@@ -28,7 +28,8 @@ Imports:
     graphics,
     methods,
     httr,
-    raster
+    raster,
+    mapmisc
 Suggests:
     testthat,
     knitr

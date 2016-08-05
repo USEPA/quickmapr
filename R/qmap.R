@@ -80,7 +80,7 @@ qmap <- function(..., extent = NULL, order = 1:length(mapdata),
         bbx <- bbox(extent)
         # }
     }
-    bbx <- data.frame(bbx)
+    #bbx <- data.frame(bbx)
     
     values <- NULL
     col_tbl <- NULL
@@ -128,11 +128,16 @@ plot.qmap <- function(x, ...) {
     
     # Creates the plot
     first <- TRUE
+    
     if (!is.null(basemap)) {
-        bm<-get_basemap(x,basemap,width=resolution)
-        plotRGB(bm, ext = extent(c(as.numeric(bbx[1, ]),
-                                        as.numeric(bbx[2, ]))),
-                axes=TRUE)
+        #browser()
+        bm <- mapmisc::openmap(x$map_extent,crs=proj4string(x$map_data[[1]]),
+                               zoom = 11,fact=3) 
+                            
+        
+        #bm<-get_basemap(x,basemap,width=resolution)
+        plot(bm, ext = extent(bbx),axes=TRUE)
+        message(mapmisc::openmapAttribution(bm))
         first <- FALSE
     }
     for (i in 1:length(order)) {
@@ -140,24 +145,24 @@ plot.qmap <- function(x, ...) {
             if (get_sp_type(mapdata[[order[i]]]) == "grid") {
               plot(mapdata[[order[i]]],ext=as.matrix(bbx), axes = TRUE, 
                       ...)
-              #plot(mapdata[[order[i]]], xlim = as.numeric(bbx[1, ]), 
-              #     ylim = as.numeric(bbx[2,]), axes = TRUE, 
+              #plot(mapdata[[order[i]]], xlim = bbx[1, ], 
+              #     ylim = bbx[2,], axes = TRUE, 
               #     ...)
                 first <- FALSE
             } else if (get_sp_type(mapdata[[order[i]]]) == "polygon") {
                 if (fill) {
-                  plot(mapdata[[order[i]]], xlim = as.numeric(bbx[1, ]), 
-                       ylim = as.numeric(bbx[2,]), axes = TRUE, col = colors[i], 
+                  plot(mapdata[[order[i]]], xlim = bbx[1, ], 
+                       ylim = bbx[2,], axes = TRUE, col = colors[i], 
                        ...)
                 } else {
-                  plot(mapdata[[order[i]]], xlim = as.numeric(bbx[1, ]), 
-                       ylim = as.numeric(bbx[2,]), axes = TRUE, 
+                  plot(mapdata[[order[i]]], xlim = bbx[1, ], 
+                       ylim = bbx[2,], axes = TRUE, 
                        border = colors[i], ...)
                 }
                 first <- FALSE
             } else if (!get_sp_type(mapdata[[order[i]]]) == "polygon") {
-                plot(mapdata[[order[i]]], xlim = as.numeric(bbx[1, ]), 
-                     ylim = as.numeric(bbx[2,]), axes = TRUE, col = colors[i])
+                plot(mapdata[[order[i]]], xlim = bbx[1, ], 
+                     ylim = bbx[2,], axes = TRUE, col = colors[i])
                 first <- FALSE
             }
         } else {

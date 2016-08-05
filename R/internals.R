@@ -102,10 +102,9 @@ zoom_it <- function(qmap_obj, loc, zoom_perc, out = FALSE, pan = FALSE) {
     } else {
         rng <- get_range(qmap_obj) * (1 - zoom_perc)
     }
-    
-    me <- data.frame(min =  c(loc$x - (rng[1]/2), loc$y - (rng[2]/2)),
-             max =  c(loc$x + (rng[1]/2), loc$y + (rng[2]/2)),
-             row.names = c("x","y"))
+    me <- bbox(matrix(c(loc$x - (rng[1]/2), loc$y - (rng[2]/2),
+                   loc$x + (rng[1]/2), loc$y + (rng[2]/2)), 
+                   nrow = 2, byrow = T))
   
     if(zoom_test(qmap_obj, me)&&!out&&!pan){
       message("zoom limit has been reached")
@@ -113,6 +112,7 @@ zoom_it <- function(qmap_obj, loc, zoom_perc, out = FALSE, pan = FALSE) {
     }
     
     qmap_obj$map_extent <- me
+    
     plot.qmap(qmap_obj)
     return(qmap_obj)
 }
