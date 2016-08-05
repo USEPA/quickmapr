@@ -59,8 +59,8 @@ test_that("projection checks work",{
 })
 
 test_that("map_extent is assigned correctly with single input",{
-  expect_is(qmap(lake)$map_extent,"data.frame")
-  expect_is(qmap(lake,extent = samples)$map_extent,"data.frame")
+  expect_is(qmap(lake)$map_extent,"matrix")
+  expect_is(qmap(lake,extent = samples)$map_extent,"matrix")
 })
 
 test_that("i() works", {
