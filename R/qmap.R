@@ -188,19 +188,34 @@ plot.qmap <- function(x, ...) {
 
 #' Default printing of a qmap object
 #' 
-#' Prints the summary of a qmap object
+#' Plots qmap object at full extent
 #' 
 #' @param x input qmap class to print
 #' @param ... options passed to summary
 #' @method print qmap
 #' @export
 print.qmap <- function(x, ...) {
-    print_it <- list(map_data = names(x$map_data), map_extent = x$map_extent, 
-                     draw_order = x$draw_order, colors = x$colors,
-                     fill = x$fill, label = x$label)
-    return(print_it)
+    #print_it <- list(map_data = names(x$map_data), map_extent = x$map_extent, 
+    #                 draw_order = x$draw_order, colors = x$colors,
+    #                 fill = x$fill, label = x$label)
+    #return(print_it)
+    f(x)
 }
 
+#' Summary of qmap
+#' 
+#' Prvoides useful summary of a qmap object
+#' 
+#' @param x input qmap class to print
+#' @param ... options passed to summary
+#' @method print qmap
+#' @export
+summary.qmap <- function(x, ...) {
+  print_it <- list(map_data = names(x$map_data), map_extent = x$map_extent, 
+                   draw_order = x$draw_order, colors = x$colors,
+                   fill = x$fill, label = x$label)
+  return(print_it)
+}
 #' Get a basemap from USGS National Map
 #' 
 #' Uses the National Map Aerial Image REST API to return an aerial image to be
